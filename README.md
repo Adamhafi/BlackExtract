@@ -1,11 +1,80 @@
 # ⚔️ BlackExtract
 
-**The Devoted Extraction Blade** - A professional URL content extractor and code beautifier with a luxury dark interface.
+**The Devoted Extraction Blade** - A professional URL content extractor, code beautifier, and **information disclosure vulnerability scanner** with a luxury dark interface.
 
 ![Version](https://img.shields.io/badge/version-2.0-darkred)
 ![Python](https://img.shields.io/badge/python-3.8+-darkred)
 ![License](https://img.shields.io/badge/license-MIT-darkred)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-darkred)
+![Security](https://img.shields.io/badge/security-vulnerability%20scanner-darkred)
+
+## 🎯 Use Cases
+
+### Bug Bounty Hunting
+```bash
+# Extract all JS files from a target domain
+# Scan for exposed API keys, tokens, secrets
+# Example: Found AWS keys in production bundle → $$
+```
+
+### Security Auditing
+```bash
+# Assess client's web application security
+# Identify information disclosure vulnerabilities
+# Generate compliance reports
+```
+
+### Penetration Testing
+```bash
+# Reconnaissance phase - map attack surface
+# Extract and analyze client-side code
+# Discover hidden endpoints and credentials
+```
+
+### Code Review
+```bash
+# Beautify minified production code
+# Review for security best practices
+# Identify hardcoded secrets
+```
+
+---
+
+## 💡 Real-World Example
+
+**Scenario**: Bug bounty on `https://target.com`
+
+1. **Collect URLs** using browser dev tools or proxy
+   ```
+   https://target.com/_next/static/chunks/main-abc123.js
+   https://target.com/assets/vendor-xyz789.js
+   https://target.com/api/config.js
+   ```
+
+2. **Paste into BlackExtract** and click "⚔️ EXTRACT & BEAUTIFY"
+
+3. **Review secrets_report.txt**
+   ```
+   🚨 Found: Stripe secret key (sk_live_...)
+   🚨 Found: AWS access key (AKIA...)
+   🚨 Found: Internal API endpoint with auth token
+   ```
+
+4. **Verify and Report** → $$ Bounty
+
+---
+
+## 🎯 Purpose
+
+BlackExtract is designed for **security researchers, penetration testers, and bug bounty hunters** to efficiently extract and analyze web application assets for information disclosure vulnerabilities. It automatically hunts for exposed:
+
+- 🔑 API Keys & Secrets
+- 🔐 Authentication Tokens
+- 💳 Payment Gateway Keys (Stripe, etc.)
+- 🗄️ Database Credentials
+- 🔒 Private Keys & Certificates
+- 📧 Email Addresses & Internal IPs
+- 🚨 And 50+ other sensitive patterns
 
 ---
 
@@ -13,11 +82,33 @@
 
 ### Core Capabilities
 - **🌐 Smart URL Extraction** - Automatically detects and filters URLs from mixed text input
+- **🔍 Vulnerability Scanner** - Detects 12+ types of sensitive data exposure using regex patterns
 - **✨ Code Beautification** - Transforms minified code into readable, properly formatted output
 - **📁 Organized File Structure** - Automatically sorts extracted files by extension type
 - **🔄 Duplicate Preservation** - Maintains all URL entries, even duplicates (18 lines = 18 files)
 - **⚡ Multi-threaded Downloads** - Concurrent processing for maximum speed (5 parallel workers)
+- **📊 Secrets Report** - Generates detailed vulnerability reports with severity ratings
 - **🎨 Luxury GUI** - Professional dark red and black interface
+
+### Security Detection Patterns
+
+BlackExtract scans for the following sensitive information:
+
+| Category | Patterns Detected | Severity |
+|----------|------------------|----------|
+| **API Keys** | api_key, apiKey, api_secret | 🔴 Critical |
+| **AWS Credentials** | AKIA keys, aws_access_key_id, aws_secret_access_key | 🔴 Critical |
+| **Private Keys** | RSA/EC/DSA private keys, privateKey | 🔴 Critical |
+| **Database URLs** | MongoDB, MySQL, PostgreSQL, Redis connection strings | 🔴 Critical |
+| **Payment Keys** | Stripe live keys (sk_live, pk_live) | 🔴 Critical |
+| **OAuth Tokens** | oauth_token, access_token, auth_token | 🟠 High |
+| **JWT Tokens** | JSON Web Tokens (eyJ...) | 🟠 High |
+| **Passwords** | password, passwd, pwd fields | 🟠 High |
+| **Secret Keys** | secret_key, secretKey | 🟠 High |
+| **GitHub Tokens** | gh[pousr]_ tokens | 🔴 Critical |
+| **Slack Tokens** | xox[baprs]- tokens | 🟠 High |
+| **Email Addresses** | Email patterns | 🟡 Low |
+| **IP Addresses** | IPv4 addresses | 🟡 Low |
 
 ### Supported File Types
 - **JavaScript**: `.js`, `.jsx`, `.ts`, `.tsx`, `.json`
@@ -55,7 +146,7 @@ Automatically beautifies:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/blackextract.git
+git clone https://github.com/AdamHafi/blackextract.git
 cd blackextract
 
 # Install required packages
@@ -108,6 +199,7 @@ python blackextract.py
 
 ```
 my_extraction/
+├── secrets_report.txt    ← 🚨 DETAILED VULNERABILITY REPORT
 ├── js/
 │   ├── 1.js    ← Beautified JavaScript
 │   ├── 2.js
@@ -117,6 +209,24 @@ my_extraction/
 │   └── 4.css
 └── php/
     └── 6.php   ← Beautified PHP
+```
+
+**secrets_report.txt** contains:
+```
+================================================================================
+FILE: 1.js
+URL: https://example.com/bundle.js
+SECRETS FOUND: 3
+================================================================================
+
+[CRITICAL] SEVERITY
+--------------------------------------------------------------------------------
+
+Type: api_key
+Line: 142
+Value: AIzaSyD8F9X2K3L4M5N6O7P8Q9R0S1T2U3V4W5X
+Context: const API_KEY = "AIzaSyD8F9X2K3L4M5N6O7P8Q9R0S1T2U3V4W5X";
+----------------------------------------
 ```
 
 ---
@@ -227,7 +337,7 @@ Contributions are welcome! Here's how you can help:
 ### Development Setup
 ```bash
 # Clone your fork
-git clone https://github.com/yourusername/blackextract.git
+git clone https://github.com/AdamHafi/blackextract.git
 
 # Create virtual environment
 python -m venv venv
@@ -292,8 +402,8 @@ SOFTWARE.
 
 **Adam** - *The Devoted Black Blade*
 
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+- GitHub: [@AdamHafi](https://github.com/AdamHafi)
+- Email: adamhafi187@gmail.com
 
 ---
 
